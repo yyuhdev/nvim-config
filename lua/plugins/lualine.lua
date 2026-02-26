@@ -2,20 +2,108 @@ return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-web-devicons" },
   event = "VeryLazy",
-  opts = {
-    options = {
-      theme = "catppuccin",
-      globalstatus = true,
-      component_separators = { left = "", right = "" },
-      section_separators = { left = "", right = "" },
-    },
-    sections = {
-      lualine_a = { "mode" },
-      lualine_b = { "branch", "diff", "diagnostics" },
-      lualine_c = { { "filename", path = 1 } },
-      lualine_x = { "filetype" },
-      lualine_y = { "progress" },
-      lualine_z = { "location" },
-    },
-  },
+  opts = function()
+    local colors = {
+      bg        = "#0f111a",
+      fg        = "#c0caf5",
+      blue      = "#7aa2f7",
+      cyan      = "#7dcfff",
+      green     = "#9ece6a",
+      yellow    = "#e0af68",
+      red       = "#f7768e",
+      magenta   = "#bb9af7",
+      surface   = "#1a1b26",
+      overlay   = "#24283b",
+      muted     = "#565f89",
+    }
+
+    local theme = {
+      normal = {
+        a = { fg = colors.bg,      bg = colors.blue,    gui = "bold" },
+        b = { fg = colors.fg,      bg = colors.overlay },
+        c = { fg = colors.muted,   bg = colors.bg },
+      },
+      insert = {
+        a = { fg = colors.bg,      bg = colors.green,   gui = "bold" },
+        b = { fg = colors.fg,      bg = colors.overlay },
+        c = { fg = colors.muted,   bg = colors.bg },
+      },
+      visual = {
+        a = { fg = colors.bg,      bg = colors.magenta, gui = "bold" },
+        b = { fg = colors.fg,      bg = colors.overlay },
+        c = { fg = colors.muted,   bg = colors.bg },
+      },
+      replace = {
+        a = { fg = colors.bg,      bg = colors.red,     gui = "bold" },
+        b = { fg = colors.fg,      bg = colors.overlay },
+        c = { fg = colors.muted,   bg = colors.bg },
+      },
+      command = {
+        a = { fg = colors.bg,      bg = colors.yellow,  gui = "bold" },
+        b = { fg = colors.fg,      bg = colors.overlay },
+        c = { fg = colors.muted,   bg = colors.bg },
+      },
+      inactive = {
+        a = { fg = colors.muted,   bg = colors.bg },
+        b = { fg = colors.muted,   bg = colors.bg },
+        c = { fg = colors.muted,   bg = colors.bg },
+      },
+    }
+
+    local slash_divider = {
+      function()
+        return "The free development of each is the condition for the free development of all."
+      end,
+      color = { fg = colors.blue, bg = colors.bg },
+      padding = { left = 1, right = 1 },
+    }
+
+    return {
+      options = {
+        theme                = theme,
+        globalstatus         = true,
+        section_separators   = { left = "", right = "" },
+        always_divide_middle = true,
+      },
+      sections = {
+        lualine_a = {
+          {
+            "mode",
+            fmt = function(str) return "" .. str end,
+          },
+        },
+        lualine_b = {
+          { "branch" },
+          { "diagnostics",
+            symbols = { error = " ", warn = " ", info = " ", hint = "󰌵 " },
+          },
+        },
+        lualine_c = {
+          { "filename",
+            path    = 1,
+            symbols = { modified = "●", readonly = "", unnamed = "[No Name]" },
+            color   = { fg = colors.fg, bg = colors.bg },
+          },
+          slash_divider,
+        },
+        lualine_x = {
+          { "filetype",
+            colored   = true,
+            icon_only = false,
+          },
+        },
+        lualine_z = {
+          { "location", fmt = function(str) return " " .. str end },
+        },
+      },
+      inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { { "filename", path = 1, color = { fg = colors.muted } } },
+        lualine_x = { { "location", color = { fg = colors.muted } } },
+        lualine_y = {},
+        lualine_z = {},
+      },
+    }
+  end,
 }
