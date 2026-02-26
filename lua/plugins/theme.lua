@@ -2,18 +2,18 @@ return {
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    priority = 1000, 
+    priority = 1000,
     config = function()
       require("catppuccin").setup({
-        flavour = "mocha", 
+        flavour = "mocha",
         integrations = {
-          telescope = true,
+          telescope  = true,
           treesitter = true,
-          gitsigns = true,
-          which_key = true,
+          gitsigns   = true,
+          which_key  = true,
+          dashboard = true
         },
       })
-
       vim.cmd.colorscheme("catppuccin")
     end,
   },
