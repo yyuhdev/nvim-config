@@ -61,9 +61,15 @@ return {
     return {
       options = {
         theme                = theme,
-        globalstatus         = true,
+        globalstatus         = false,
         section_separators   = { left = "", right = "" },
         always_divide_middle = true,
+        disabled_filetypes = {
+          statusline = {},
+          winbar = {},
+          neotree = {},
+          nui = {}
+        },
       },
       sections = {
         lualine_a = {
@@ -73,10 +79,7 @@ return {
           },
         },
         lualine_b = {
-          { "branch" },
-          { "diagnostics",
-            symbols = { error = " ", warn = " ", info = " ", hint = "󰌵 " },
-          },
+          { "branch" } 
         },
         lualine_c = {
           { "filename",
@@ -95,15 +98,7 @@ return {
         lualine_z = {
           { "location", fmt = function(str) return " " .. str end },
         },
-      },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { { "filename", path = 1, color = { fg = colors.muted } } },
-        lualine_x = { { "location", color = { fg = colors.muted } } },
-        lualine_y = {},
-        lualine_z = {},
-      },
+      }
     }
   end,
 }
