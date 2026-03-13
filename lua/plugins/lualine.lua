@@ -14,7 +14,6 @@ return {
     opts = {
       filesystem = {
         window = {
-          position = 'float',
           popup = {
             position = { col = '100%', row = '2' },
             size = function(state)
